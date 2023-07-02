@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "800823761065",
+    "project_id": "subac-app",
+    "storage_bucket": "subac-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800823761065:android:a8b4787fe822cd743c71b8",
+        "android_client_info": {
+          "package_name": "com.example.subac_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800823761065-dktblcf50l8do4ofpgnpbkfrvlidskkn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.subac_app",
+            "certificate_hash": "6961084cde6b51b550c0cecb6f41fcb6b452d07a"
+          }
+        },
+        {
+          "client_id": "800823761065-f2vkki38o1oeuvb0vftig9r5hrm2na2a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALc3pbayiQipwF_Imc1L7BIvNEgz-4v8U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800823761065-f2vkki38o1oeuvb0vftig9r5hrm2na2a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "800823761065-es4kmvijl89746nc8a63s9504cesson4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.subacApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800823761065:android:47f1b77c1ad05dee3c71b8",
+        "android_client_info": {
+          "package_name": "com.example.subac_app_update"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800823761065-f2vkki38o1oeuvb0vftig9r5hrm2na2a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALc3pbayiQipwF_Imc1L7BIvNEgz-4v8U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800823761065-f2vkki38o1oeuvb0vftig9r5hrm2na2a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "800823761065-es4kmvijl89746nc8a63s9504cesson4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.subacApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
