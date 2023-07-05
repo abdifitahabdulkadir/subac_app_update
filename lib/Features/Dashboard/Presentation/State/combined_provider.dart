@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //my imports
-import '/Features/Userprofile/Presentation/state/firebase_constants.dart';
+import '../../../../core/state/firebase_constants.dart';
 import '/Features/Dashboard/Presentation/widgets/home.dart';
 
 final combinedScreensProvider = StateProvider<List<Widget>>(

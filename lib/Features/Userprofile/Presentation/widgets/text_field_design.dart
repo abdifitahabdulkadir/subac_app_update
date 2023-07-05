@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class TextFieldDesign extends StatelessWidget {
+class UserTextField extends StatelessWidget {
   final String hintText;
-  final bool isTextHiddding;
   final TextInputType keyboardType;
   final IconData prefixIcon;
+  TextEditingController controller;
   final Function(String currentValue) saveValue;
   final String? Function(String? validateValue)? validator;
 
-  TextFieldDesign({
+  UserTextField({
     super.key,
+    required this.controller,
     required this.saveValue,
     required this.validator,
     required this.prefixIcon,
     required this.hintText,
-    required this.isTextHiddding,
     required this.keyboardType,
   });
 
@@ -25,13 +25,10 @@ class TextFieldDesign extends StatelessWidget {
       child: TextFormField(
         validator: validator,
         onChanged: saveValue,
-        obscureText: isTextHiddding,
+        controller: controller,
         keyboardType: keyboardType,
         decoration: InputDecoration(
-          prefixIcon: Icon(
-            prefixIcon,
-            color: Theme.of(context).primaryColor,
-          ),
+          prefixIcon: Icon(prefixIcon, color: Theme.of(context).primaryColor),
           labelText: hintText,
           hintStyle: Theme.of(context).textTheme.labelSmall,
           enabledBorder: OutlineInputBorder(
