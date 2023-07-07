@@ -15,19 +15,16 @@ class BuildListTilie extends StatelessWidget {
           width: 40,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.grey.withOpacity(0.30),
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
           ),
           child: Icon(
             leadingIcon,
-            color: Color.fromARGB(255, 49, 202, 169),
+            color: Theme.of(context).iconTheme.color,
           ),
         ),
         title: Text(
           title,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-          ),
+          style: Theme.of(context).textTheme.bodySmall,
         ),
         trailing: Icon(Icons.arrow_forward_ios_outlined),
       ),

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:subac_app_update/Features/Userprofile/Domain/entities/image_update_entity.dart';
+import '/Features/Userprofile/Domain/entities/image_update_entity.dart';
 
 import '../../Application/Usecases/update_userimage_usercase_implemented.dart';
 

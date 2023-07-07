@@ -2,17 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // my imports
-import '../../Application/Usecases/fetching_useruscae_implemented.dart';
 import '/Features/Userprofile/Presentation/state/fetching_user_image_provider.dart';
 import 'upload_profile_image.dart';
 
 class UserPhoto extends ConsumerWidget {
   bool showCameraIcon = false;
   UserPhoto({required this.showCameraIcon});
-// instance of fetching iformation implemented use case
-  FetchingUserInformationUseImpelmented _fetchInformationUseImple =
-      FetchingUserInformationUseImpelmented();
- 
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

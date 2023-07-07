@@ -1,4 +1,3 @@
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // my imports
@@ -6,6 +5,7 @@ import '../../../../core/state/firebase_constants.dart';
 
 final fetchingUserProfileProvider =
     FutureProvider<Map<String, String>>((ref) async {
+  print("waryaa swirkii wu isbadlay");
   String username = "";
   String imageUrl = "";
   await ref

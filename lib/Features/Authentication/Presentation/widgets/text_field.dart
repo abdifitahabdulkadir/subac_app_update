@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TextFieldDesign extends StatelessWidget {
+// my imports
+import '/config/themes/theme_manager_provider.dart';
+
+class TextFieldDesign extends ConsumerWidget {
   final String hintText;
   final bool isTextHiddding;
   final TextInputType keyboardType;
@@ -19,25 +23,44 @@ class TextFieldDesign extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
       child: TextFormField(
-        validator: validator,
+        validator: (currentName) {
+          if (currentName!.isEmpty) {
+            return "name can be empty";
+          } else if (currentName.length < 6) {
+            return "at least 5 characters";
+          }
+          return null;
+        },
         onChanged: saveValue,
         obscureText: isTextHiddding,
         keyboardType: keyboardType,
+        
+        cursorColor: ref.watch(themeManagerProvider) == ThemeMode.light
+            ? Theme.of(context).colorScheme.primary
+            : Theme.of(context).colorScheme.onBackground,
         decoration: InputDecoration(
           prefixIcon: Icon(
             prefixIcon,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).iconTheme.color,
           ),
           labelText: hintText,
           hintStyle: Theme.of(context).textTheme.labelSmall,
           enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+              borderSide: BorderSide(
+            color: ref.watch(themeManagerProvider) == ThemeMode.light
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.onBackground,
+          )),
           focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+              borderSide: BorderSide(
+            color: ref.watch(themeManagerProvider) == ThemeMode.light
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.onBackground,
+          )),
           fillColor: Colors.white,
           labelStyle: Theme.of(context).textTheme.labelSmall,
         ),

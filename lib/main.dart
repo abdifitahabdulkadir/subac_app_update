@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
-import '/Features/Userprofile/Presentation/screens/setting.dart';
-
 
 // my imports
 import '/Features/Dashboard/Presentation/Screens/dashboard.dart';
+import 'Features/Userprofile/Presentation/screens/setting.dart';
 import 'config/themes/theme_manager_provider.dart';
 import 'config/themes/theming_app.dart';
 import '/Features/Userprofile/Presentation/screens/edit_profile_informatioin.dart';
@@ -19,11 +18,37 @@ void main() async {
   runApp(const ProviderScope(child: SubacAppUpdate()));
 }
 
-class SubacAppUpdate extends ConsumerWidget {
+class SubacAppUpdate extends ConsumerStatefulWidget {
   const SubacAppUpdate({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SubacAppUpdate> createState() => _SubacAppUpdateState();
+}
+
+class _SubacAppUpdateState extends ConsumerState<SubacAppUpdate> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    getData(ref: ref);
+  }
+
+  void getData({required WidgetRef ref}) async {
+    ref
+        .watch(firebaseFirebaseInstanceProvider)
+        .collection("appTheme")
+        .doc(ref.read(firebaseAuthInstanceProvider).currentUser!.uid)
+        .get()
+        .then((value) {
+      value.data()?["themeType"] == "dark"
+          ? ref
+              .read(themeManagerProvider.notifier)
+              .update((state) => ThemeMode.dark)
+          : ThemeMode.light;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       theme: lightTheme,
       darkTheme: darkTheme,

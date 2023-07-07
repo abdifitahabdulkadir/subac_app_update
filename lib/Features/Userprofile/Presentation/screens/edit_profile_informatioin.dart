@@ -3,10 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // custom imports
 import '../state/updating_loading_state_provider.dart';
-import '/Features/Authentication/Presentation/utitlities/validate_email.dart';
 import '../Utitlities/send_updatingInformation.dart';
 import '/Features/Userprofile/Presentation/widgets/user_photo.dart';
-import '/Features/Userprofile/Presentation/Utitlities/fetch_first_userInformation.dart';
 import '../widgets/text_field_design.dart';
 
 class EditProfileInformation extends ConsumerStatefulWidget {
@@ -22,9 +20,7 @@ class _EditProfileInformationState
   // key for storing and validating the field validators
   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  TextEditingController _nameController = TextEditingController();
-
-  TextEditingController _emailController = TextEditingController();
+  String _nameController = "";
 
   /*
   * this is the builder for button of save
@@ -35,7 +31,7 @@ class _EditProfileInformationState
       width: 200,
       height: 50,
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).colorScheme.primary,
         borderRadius: BorderRadius.circular(16),
       ),
       child: TextButton(
@@ -43,10 +39,7 @@ class _EditProfileInformationState
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
             sendingUpdatingInformationToUseCase(
-                name: _nameController,
-                email: _emailController,
-                ref: ref,
-                context: context);
+                name: _nameController, ref: ref, context: context);
           }
         },
         child: Text(
@@ -58,29 +51,21 @@ class _EditProfileInformationState
   }
 
   @override
-  void initState() {
-    super.initState();
-    callFetchingFunction(
-        nameController: _nameController,
-        emailController: _emailController,
-        context: context,
-        ref: ref);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         appBar: AppBar(
           elevation: 0,
           toolbarHeight: 60,
           centerTitle: true,
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           title: Text("Edit Profile"),
         ),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 30),
               UserPhoto(showCameraIcon: true),
               Center(
                 child: Padding(
@@ -102,7 +87,7 @@ class _EditProfileInformationState
                     children: [
                       UserTextField(
                         saveValue: (enteredName) {
-                          _nameController.text = enteredName;
+                          _nameController = enteredName;
                         },
                         validator: (currentName) {
                           if (currentName!.isEmpty) {
@@ -112,21 +97,9 @@ class _EditProfileInformationState
                           }
                           return null;
                         },
-                        controller: _nameController,
                         prefixIcon: Icons.person,
                         hintText: "Name",
                         keyboardType: TextInputType.name,
-                      ),
-                      UserTextField(
-                        saveValue: (enteredEmail) {
-                          _emailController.text = enteredEmail;
-                        },
-                        validator: (value) =>
-                            validateEmail(email: _emailController.text),
-                        controller: _emailController,
-                        prefixIcon: Icons.email,
-                        hintText: "Email",
-                        keyboardType: TextInputType.emailAddress,
                       ),
                     ],
                   ),

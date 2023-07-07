@@ -5,9 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../Features/Authentication/Presentation/widgets/button_design.dart';
 import '../../../../Features/Authentication/Presentation/state/auth_state_provider.dart';
 import '../../../../Features/Authentication/Presentation/widgets/text_field.dart';
-import '../../../../config/themes/theme_manager_provider.dart';
 import '../utitlities/send_user_to_provider.dart';
 import '../utitlities/validate_email.dart';
+import '/config/themes/theme_manager_provider.dart';
 
 class RegisterLogin extends ConsumerWidget {
   RegisterLogin({super.key});
@@ -15,21 +15,7 @@ class RegisterLogin extends ConsumerWidget {
   String name = "";
   String email = "";
   String passowrd = "";
-
   final _formKey = GlobalKey<FormState>();
-
-/*
-* only updating the state of themodeProvider to it's current reverse ,
-* if it is dark then to light otherwise to light.
- */
-  void _updateThemeMode({required WidgetRef ref}) =>
-      ref.read(themeManagerProvider.notifier).state == ThemeMode.dark
-          ? ref
-              .read(themeManagerProvider.notifier)
-              .update((state) => ThemeMode.light)
-          : ref
-              .read(themeManagerProvider.notifier)
-              .update((state) => ThemeMode.dark);
 
   /*
   * updating the isLoadingProvider to true if user clicks only 
@@ -46,7 +32,7 @@ class RegisterLogin extends ConsumerWidget {
     }
     ref.read(isloadingProvider.notifier).update((state) => true);
     FocusScope.of(context).unfocus();
-    final result = await sendUserDataToProvider(
+    await sendUserDataToProvider(
       ref: ref,
       islogin: islogin,
       email: email,
@@ -60,7 +46,9 @@ class RegisterLogin extends ConsumerWidget {
   * this is the switching for login to register and register to login
   * it toggales the showLogin boolean variable to it's inverse of current value.
   * means true to false and false to true. 
-  * then UI will reactive because it subscribes and watches the riverpod stateProvider in build method.
+  * then UI will reactive because it subscribes 
+  * and watches the riverpod stateProvider in 
+  * build method.
   */
   void _toggalingLoginShow({required WidgetRef ref}) => ref
       .read(showLoginProvider.notifier)
@@ -72,26 +60,16 @@ class RegisterLogin extends ConsumerWidget {
     final isloading = ref.watch(isloadingProvider);
 
     return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           toolbarHeight: 50,
           centerTitle: true,
           title: Text(
             showLogin ? "Login Your Account" : "Creating Account",
             style: Theme.of(context).textTheme.displayLarge,
           ),
-          actions: [
-            IconButton(
-              onPressed: () => _updateThemeMode(ref: ref),
-              icon: Icon(
-                ref.watch(themeManagerProvider.notifier).state == ThemeMode.dark
-                    ? Icons.light_mode
-                    : Icons.dark_mode,
-                size: 30,
-                color: Colors.white,
-              ),
-            )
-          ],
+          
         ),
         body: SingleChildScrollView(
           child: Form(
@@ -140,14 +118,16 @@ class RegisterLogin extends ConsumerWidget {
                     }),
                 if (isloading)
                   CircularProgressIndicator(
-                      color: Theme.of(context).primaryColor),
+                      color: ref.watch(themeManagerProvider) == ThemeMode.light
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.onBackground),
                 if (!isloading)
                   Container(
                     height: 60,
                     width: double.maxFinite,
                     margin: const EdgeInsets.symmetric(horizontal: 34),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: TextButton(
