@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 const Color _primaryColorLightTheme = Color.fromARGB(255, 49, 202, 169);
 const Color _primaryColorDarkTheme = Color.fromARGB(255, 39, 55, 77);
-const Color _specialBackground = Color.fromARGB(255, 38, 80, 138);
 
 /*
 * creating object of light mode and 
@@ -36,7 +35,7 @@ ThemeData lightTheme = ThemeData(
       ),
       labelMedium: TextStyle(
         color: Colors.white,
-        fontSize: 30,
+        fontSize: 40,
         fontWeight: FontWeight.bold,
       ),
       labelSmall: TextStyle(
@@ -60,7 +59,7 @@ ThemeData darkTheme = ThemeData(
     seedColor: _primaryColorDarkTheme,
     brightness: Brightness.dark,
     onSecondary: _primaryColorDarkTheme,
-    onBackground: Colors.white,
+    onBackground: _primaryColorDarkTheme.withOpacity(0.5),
     onSecondaryContainer: _primaryColorDarkTheme.withOpacity(0.5),
   ),
   iconTheme: IconThemeData(
@@ -80,7 +79,7 @@ ThemeData darkTheme = ThemeData(
     ),
     labelMedium: TextStyle(
       color: Colors.white,
-      fontSize: 30,
+      fontSize: 40,
       fontWeight: FontWeight.bold,
     ),
     labelSmall: TextStyle(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:subac_app_update/config/routes/route_constant_names.dart';
 
 // my imports
 import '../../../../Features/Authentication/Presentation/widgets/button_design.dart';
@@ -7,6 +9,7 @@ import '../../../../Features/Authentication/Presentation/state/auth_state_provid
 import '../../../../Features/Authentication/Presentation/widgets/text_field.dart';
 import '../utitlities/send_user_to_provider.dart';
 import '../utitlities/validate_email.dart';
+import '../widgets/optional_pointing_text.dart';
 import '/config/themes/theme_manager_provider.dart';
 
 class RegisterLogin extends ConsumerWidget {
@@ -32,13 +35,18 @@ class RegisterLogin extends ConsumerWidget {
     }
     ref.read(isloadingProvider.notifier).update((state) => true);
     FocusScope.of(context).unfocus();
-    await sendUserDataToProvider(
+    final returnedValue = await sendUserDataToProvider(
       ref: ref,
       islogin: islogin,
       email: email,
       password: passowrd,
       name: name,
     );
+    if (returnedValue.isRight()) {
+      print("we are inthe right side ");
+      context.goNamed(SubacRouteConstants.dashboardName);
+    } else
+      print("error aya dhacay");
     ref.read(isloadingProvider.notifier).update((state) => false);
   }
 
@@ -69,7 +77,6 @@ class RegisterLogin extends ConsumerWidget {
             showLogin ? "Login Your Account" : "Creating Account",
             style: Theme.of(context).textTheme.displayLarge,
           ),
-          
         ),
         body: SingleChildScrollView(
           child: Form(
@@ -120,7 +127,7 @@ class RegisterLogin extends ConsumerWidget {
                   CircularProgressIndicator(
                       color: ref.watch(themeManagerProvider) == ThemeMode.light
                           ? Theme.of(context).colorScheme.primary
-                          : Theme.of(context).colorScheme.onBackground),
+                          : Theme.of(context).colorScheme.background),
                 if (!isloading)
                   Container(
                     height: 60,
@@ -140,6 +147,16 @@ class RegisterLogin extends ConsumerWidget {
                       ),
                     ),
                   ),
+                SizedBox(height: 20),
+                if (!isloading) OptionalPointingText(),
+                if (!isloading)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ButtonDesign(isFacebook: true),
+                      ButtonDesign(isFacebook: false),
+                    ],
+                  ),
                 if (!isloading)
                   TextButton(
                     onPressed: () => _toggalingLoginShow(ref: ref),
@@ -150,10 +167,6 @@ class RegisterLogin extends ConsumerWidget {
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
-                if (!isloading)
-                  Text("Or", style: Theme.of(context).textTheme.bodySmall),
-                if (!isloading) ButtonDesign(isFacebook: true),
-                if (!isloading) ButtonDesign(isFacebook: false)
               ],
             ),
           ),

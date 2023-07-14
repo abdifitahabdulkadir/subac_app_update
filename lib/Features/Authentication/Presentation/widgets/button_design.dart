@@ -19,8 +19,9 @@ class ButtonDesign extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
+        padding: const EdgeInsets.all(10),
         height: 50,
-        width: double.maxFinite,
+        width: 50,
         margin: const EdgeInsets.symmetric(horizontal: 34),
         decoration: BoxDecoration(
           color: ref.watch(themeManagerProvider) == ThemeMode.light
@@ -28,12 +29,7 @@ class ButtonDesign extends ConsumerWidget {
               : Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: ListTile(
-          onTap: () {},
-          leading: isFacebook ? _facebookLocalImage : _googleLocalImage,
-          title: Text(isFacebook ? "Sign with Facebook" : "Sign with Google",
-              style: Theme.of(context).textTheme.bodySmall),
-        ),
+        child: isFacebook ? _facebookLocalImage : _googleLocalImage,
       ),
     );
   }

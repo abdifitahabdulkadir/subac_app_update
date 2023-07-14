@@ -15,23 +15,20 @@ class ThemeManagementRepository {
   Future<Either<AuthErrorHandling, bool>> storeAppTheme(
       {required WidgetRef ref}) async {
     bool isErrorHappened = false;
-
     String errorMessage = "";
-    print("wala yimid");
+
+
     try {
       await _firebaseFirestore
           .collection("appTheme")
           .doc(_firebaseAuth.currentUser!.uid)
           .set({
-        "themeType": ref.read(themeManagerProvider) == ThemeMode.light
-            ? "light"
-            : "dark",
+        "themeType":
+            ref.read(themeManagerProvider) == ThemeMode.light ? "light" : "dark"
       });
       isErrorHappened = false;
     } catch (exception) {
       isErrorHappened = true;
-      print("error aya dhacay");
-      print(exception);
       errorMessage = exception.toString();
     }
 

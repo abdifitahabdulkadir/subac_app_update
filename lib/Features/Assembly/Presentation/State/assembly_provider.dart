@@ -4,4 +4,4 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // imports
 import '../widgets/assembly.dart';
 
-final assemblyProvider = StateProvider<Widget>((ref) => Assembly());
+final assemblyProvider = StateProvider.autoDispose<Widget>((ref) => Assembly());

@@ -41,7 +41,7 @@ class TextFieldDesign extends ConsumerWidget {
         
         cursorColor: ref.watch(themeManagerProvider) == ThemeMode.light
             ? Theme.of(context).colorScheme.primary
-            : Theme.of(context).colorScheme.onBackground,
+            : Theme.of(context).colorScheme.secondary,
         decoration: InputDecoration(
           prefixIcon: Icon(
             prefixIcon,
@@ -53,13 +53,13 @@ class TextFieldDesign extends ConsumerWidget {
               borderSide: BorderSide(
             color: ref.watch(themeManagerProvider) == ThemeMode.light
                 ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).colorScheme.onBackground,
+                : Theme.of(context).colorScheme.background,
           )),
           focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
             color: ref.watch(themeManagerProvider) == ThemeMode.light
                 ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).colorScheme.onBackground,
+                : Theme.of(context).colorScheme.background,
           )),
           fillColor: Colors.white,
           labelStyle: Theme.of(context).textTheme.labelSmall,

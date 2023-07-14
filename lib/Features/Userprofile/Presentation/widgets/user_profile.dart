@@ -1,15 +1,17 @@
+import 'package:go_router/go_router.dart';
 import 'package:share/share.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/Features/Authentication/Presentation/screens/register_login.dart';
 
 // my imports
-import '../../../../core/state/firebase_constants.dart';
+import '../../../../config/routes/route_constant_names.dart';
+import '../../../../config/state/firebase_constants.dart';
 import '/Features/Userprofile/Presentation/widgets/buildListTile.dart';
 import '/Features/Userprofile/Presentation/widgets/user_photo.dart';
-import '/Features/Userprofile/Presentation/screens/setting.dart';
-import '/Features/Userprofile/Presentation/screens/edit_profile_informatioin.dart';
 import '/Features/Userprofile/Presentation/state/fetching_user_image_provider.dart';
 import '/config/themes/theme_manager_provider.dart';
+
 class UserProfile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,16 +56,14 @@ class UserProfile extends ConsumerWidget {
                 child: Column(
                   children: [
                     InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .pushNamed(EditProfileInformation.routeName);
-                      },
+                      onTap: () => GoRouter.of(context)
+                          .go("/${SubacPathConstants.editUserInformationPath}"),
                       child: BuildListTilie(
                           title: "Edit Profile", leadingIcon: Icons.person),
                     ),
                     GestureDetector(
                       onTap: () =>
-                          Navigator.of(context).pushNamed(Setting.routeName),
+                          context.pushNamed(SubacRouteConstants.settingName),
                       child: BuildListTilie(
                           title: "Setting", leadingIcon: Icons.settings),
                     ),
@@ -84,9 +84,9 @@ class UserProfile extends ConsumerWidget {
                     Divider(height: 3, color: Colors.grey.withOpacity(0.5)),
                     BuildListTilie(title: "Help", leadingIcon: Icons.help),
                     GestureDetector(
-                      onTap: () async => await ref
-                          .watch(firebaseAuthInstanceProvider)
-                          .signOut(),
+                      onTap: () async {
+                        await ref.watch(firebaseAuthInstanceProvider).signOut();
+                      },
                       child: BuildListTilie(
                         title: "Logout",
                         leadingIcon: Icons.login_outlined,

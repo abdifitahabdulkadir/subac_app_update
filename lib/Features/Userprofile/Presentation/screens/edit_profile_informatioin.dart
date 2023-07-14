@@ -44,7 +44,9 @@ class _EditProfileInformationState
         },
         child: Text(
           "Update",
-          style: Theme.of(context).textTheme.labelMedium,
+          style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                fontSize: 20,
+              ),
         ),
       ),
     );

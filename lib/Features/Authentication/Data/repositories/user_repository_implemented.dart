@@ -45,6 +45,13 @@ class UserRepositoryImplemented implements UserRepository {
         "userid": getUserCredials.user!.uid,
         "profile_url": _userDefaultImageProfileLink,
       });
+
+      await firestoreInstace
+          .collection("appTheme")
+          .doc(getUserCredials.user!.uid)
+          .set({"themeType": "light"});
+      
+
       if (_getDocumentRefernce.id.isNotEmpty) {
         return Right(getUserCredials);
       }
