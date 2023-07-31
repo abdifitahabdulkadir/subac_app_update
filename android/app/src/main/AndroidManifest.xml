@@ -1,4 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.INTERNET" />
+<!-- Optional, you'll have to check this permission by yourself. -->
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+<queries>  
+  <intent>  
+      <action android:name="android.intent.action.TTS_SERVICE" />  
+  </intent>  
+ </queries>
     <application
         android:label="subac_app_update"
         android:name="${applicationName}"

@@ -17,10 +17,10 @@ void main() async {
 
 class SubacAppUpdate extends ConsumerStatefulWidget {
   const SubacAppUpdate({super.key});
-
   @override
   ConsumerState<SubacAppUpdate> createState() => _SubacAppUpdateState();
 }
+
 
 class _SubacAppUpdateState extends ConsumerState<SubacAppUpdate> {
   @override
@@ -31,7 +31,6 @@ class _SubacAppUpdateState extends ConsumerState<SubacAppUpdate> {
 
   void getData({required WidgetRef ref}) async {
     if (ref.read(firebaseAuthInstanceProvider).currentUser == null) {
-      print("currnet user is null fucky guy ");
       ref
           .read(themeManagerProvider.notifier)
           .update((state) => ThemeMode.light);

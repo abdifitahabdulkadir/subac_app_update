@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:subac_app_update/Features/Assembly/Presentation/State/radio_button_provider.dart';
+import '/Features/Assembly/Presentation/State/radio_button_provider.dart';
 import 'package:subac_app_update/config/themes/theme_manager_provider.dart';
 
 class RadioButtonDesign extends StatelessWidget {
