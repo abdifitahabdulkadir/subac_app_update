@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:subac_app_update/Features/Complete/Presentation/Screens/complete_task.dart';
+
+// custom imports
 import 'package:subac_app_update/config/routes/route_constant_names.dart';
 import 'package:subac_app_update/config/themes/theme_manager_provider.dart';
 
@@ -10,7 +11,8 @@ class CompleteAssembly extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     return GestureDetector(
       onTap: () =>
-          GoRouter.of(context).go("/${SubacPathConstants.completeTaskPath}"),
+          GoRouter.of(context)
+          .go("/${SubacPathConstants.completePausedSubacPath}"),
       child: SizedBox(
         width: 350,
         child: Card(

@@ -1,5 +1,7 @@
 import 'package:audiofileplayer/audiofileplayer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:subac_app_update/Features/Assembly/Data/constants/constants_text.dart';
 
 /*
 * state ==1 -- means audio is playing currently we can pause, rewind and fastforwardas.
@@ -20,28 +22,54 @@ class ReadAyahNotifier extends StateNotifier<int> {
   Audio? audio = null;
   double getCurrentPosition = 0;
 
+  FlutterTts _textToSpeech = FlutterTts();
+
 /*
 * loading and reading the current ayah
 */
-  Future<void> playAyah(
-      {required ayahPath, required WidgetRef ref, required ayahLength}) async {
+  Future<void> playAyah({required String ayahPath}) async {
     state = 1;
-    // Load from assets, store as a variable.
-    audio = await Audio.load('assets/audio/${ayahPath}.mp3', onComplete: () {
-      state = 0;
-    }, onPosition: (double currentPosiotn) {
-      getCurrentPosition = currentPosiotn;
-    })
-      ..play();
+    print("ayada loo wacay path keeda : ${ayahPath}");
+    try {
+      // Load from assets, store as a variable.
+      audio = await Audio.load('assets/audio/${ayahPath}.mp3', onComplete: () {
+        state = 0;
+      }, onPosition: (double currentPosiotn) {
+        getCurrentPosition = currentPosiotn;
+      })
+        ..play();
+    } catch (exception) {
+      print("error aya dhacay paly ayah() method oo ah ${exception}");
+    }
+  }
+
+  /*
+  * this isthe function that takes users ayah when he recites wrong ayah three times
+  */
+  Future<void> readAyahAfterUserRecitedWronglyThreeTimes(
+      {required String ayahPath}) async {
+    _textToSpeech.setLanguage("en");
+    _textToSpeech.setSpeechRate(0.4);
+    state = 1;
+
+    try {
+      audio = Audio.load('assets/audio/${ayahPath}.mp3', onComplete: () {
+        state = 0;
+      }, onPosition: (double currentPosiotn) {
+        getCurrentPosition = currentPosiotn;
+      })
+        ..play();
+    } catch (exception) {
+      print("error aya dhacay AI read ayah  method oo ah ${exception}");
+    }
   }
 
   /*
   * pausing the ayah in progress or now playing in the backgorund
   */
-  Future<void> pauseCurrentAyah() async {
+  Future<void> pauseOrResumseCurrentAyah() async {
     if (state == 1 && audio != null) {
       await audio!.pause();
-
       state = 2;
     } else if (state == 2 && audio != null) {
       state = 1;

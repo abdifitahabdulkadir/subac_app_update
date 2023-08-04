@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '/Features/Assembly/Data/Remote_source/read_error_text_provider.dart';
+import '../../Data/DataState/read_error_text_provider.dart';
 import '/Features/Assembly/Presentation/State/ayan_state_provider.dart';
 import '/Features/Assembly/Presentation/State/who_begins_provider.dart';
 
@@ -13,7 +13,7 @@ class RestartQuran extends ConsumerWidget {
       onTap: () {
         ref.watch(nextAyahIndexProvider.notifier).resetAyah();
         ref.watch(playErrorTextProvider.notifier).resetPlayErrorProvider();
-        ref.watch(whoBeginsQuranReading.notifier).update((state) => 0);
+        ref.watch(whoBeginsQuranReading.notifier).resetWhoBegins();
       },
       child: Container(
         width: 100,

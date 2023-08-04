@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:subac_app_update/Features/Assembly/Presentation/State/ayan_state_provider.dart';
-import 'package:subac_app_update/Features/Assembly/Presentation/State/who_begins_provider.dart';
+
 
 // my custom imports
 import '../../Features/Assembly/Presentation/Screens/new_assembly_screen.dart';
-import '../../Features/Complete/Presentation/Screens/complete_task.dart';
+import '../../Features/Complete/Presentation/widgets/complete_task.dart';
 import '../../Features/Dashboard/Presentation/Screens/dashboard.dart';
 import '../../Features/Userprofile/Presentation/screens/edit_profile_informatioin.dart';
 import '../../Features/Userprofile/Presentation/screens/setting.dart';
 import '../state/app_state_provider.dart';
 import '/Features/Authentication/Presentation/screens/register_login.dart';
+import '/Features/Complete/Presentation/Screens/complete_paused_subac.dart';
 import 'route_constant_names.dart';
 
 class SubacAppRoutes {
@@ -48,6 +48,13 @@ class SubacAppRoutes {
               path: SubacPathConstants.completeTaskPath,
               pageBuilder: (context, state) {
                 return MaterialPage(child: CompeleteTask());
+              },
+            ),
+            GoRoute(
+              name: SubacRouteConstants.completePausedSubacName,
+              path: SubacPathConstants.completePausedSubacPath,
+              pageBuilder: (context, state) {
+                return MaterialPage(child: CompletePausedSubac());
               },
             ),
             GoRoute(

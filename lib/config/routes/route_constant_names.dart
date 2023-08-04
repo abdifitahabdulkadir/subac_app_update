@@ -8,6 +8,7 @@ class SubacRouteConstants {
   static final String editUserInformationName = "edit_user_information";
   static final String settingName = "setting";
   static final String loginRegisterName = "login_register";
+  static final String completePausedSubacName = "complete_paused_subac";
 }
 
 class SubacPathConstants {
@@ -20,4 +21,5 @@ class SubacPathConstants {
   static final String editUserInformationPath = "edit_user_information";
   static final String settingPath = "setting";
   static final String loginRegisterPath = "/login_register";
+  static final String completePausedSubacPath = "complete_paused_subac";
 }

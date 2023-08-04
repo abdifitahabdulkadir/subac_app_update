@@ -17,7 +17,7 @@ class _MicDesignState extends ConsumerState<MicDesign> {
   AIReadingQuranAyahUsecaseImplemented _implemented =
       AIReadingQuranAyahUsecaseImplemented();
   late SpeechToText speechToText;
-  String _collectRecognizedWords = "";
+
   @override
   void initState() {
     super.initState();
@@ -38,32 +38,32 @@ class _MicDesignState extends ConsumerState<MicDesign> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPressStart: (_) async {
-        ref.read(micListeningProvider.notifier).update((state) => true);
+      onTap: () async {
         if (ref.read(micListeningProvider)) {
-          speechToText.locales();
-          await speechToText.listen(
-            localeId: "ar",
-            listenFor: Duration(minutes: 6),
-            onResult: (result) {
-              setState(() {
-                ref.read(recitedAyahByUser.notifier).update(
-                      (state) => result.recognizedWords,
-                    );
-                print(result.recognizedWords);
-              });
-            },
-          );
+          ref.read(micListeningProvider.notifier).update((state) => false);
+          await speechToText.stop();
+          await _implemented.aiReadingQuranAyahUseCase(
+              recongnizedWords: ref.read(recitedAyahByUser),
+              ref: ref,
+              personTurn: 1);
+        } else {
+          ref.read(micListeningProvider.notifier).update((state) => true);
+          if (ref.read(micListeningProvider)) {
+            speechToText.locales();
+            await speechToText.listen(
+              localeId: "ar",
+              listenFor: Duration(minutes: 6),
+              onResult: (result) {
+                setState(() {
+                  ref.read(recitedAyahByUser.notifier).update(
+                        (state) => result.recognizedWords,
+                      );
+                  print(result.recognizedWords);
+                });
+              },
+            );
+          }
         }
-      },
-      onLongPressEnd: (details) async {
-        ref.read(micListeningProvider.notifier).update((state) => false);
-        speechToText.stop();
-        await _implemented.aiReadingQuranAyahUseCase(
-            recongnizedWords: ref.read(recitedAyahByUser),
-            ref: ref,
-            context: context,
-            personTurn: 1);
       },
       child: AvatarGlow(
         child: Icon(
@@ -72,6 +72,7 @@ class _MicDesignState extends ConsumerState<MicDesign> {
         ),
         animate: ref.watch(micListeningProvider),
         showTwoGlows: true,
+        glowColor: Colors.green,
         duration: Duration(milliseconds: 2000),
         endRadius: 80.5,
         repeat: true,

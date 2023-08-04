@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
 // my custom imports
-import '/Features/Assembly/Data/Remote_source/read_ayah_provider.dart';
-import '/Features/Assembly/Data/Remote_source/read_error_text_provider.dart';
+import '/Features/Assembly/Presentation/State/mic_listening_provider.dart';
+import '/Features/Complete/Data/DataState/complete_state_provider.dart';
+import '../../Data/DataState/read_ayah_provider.dart';
+import '../../Data/DataState/read_error_text_provider.dart';
+import '../widgets/save_draft_button.dart';
 import '/Features/Assembly/Presentation/State/recited_ayah_by_user.dart';
 import '../../Application/Usecases/ai_reading_usercase_implemented.dart';
 import '../widgets/restart_quran.dart';
@@ -17,20 +21,45 @@ import '../../../core/Widgets/icon_design.dart';
 import '/Features/Assembly/Presentation/State/surah_names_provider.dart';
 import '/Features/Assembly/Presentation/State/ayan_state_provider.dart';
 import '../widgets/radio_button.dart';
+import '/config/themes/theme_manager_provider.dart';
 
 class NewAssemblyScreen extends ConsumerWidget {
   final AIReadingQuranAyahUsecaseImplemented _implemented =
       AIReadingQuranAyahUsecaseImplemented();
 
+  handleWeatherCompeletingDraftSubac(WidgetRef ref, BuildContext context) {
+    if (ref.read(whoBeginsQuranReading) == 1 &&
+        ref.read(completeStateProvider) == 1) {
+      _implemented.aiReadingQuranAyahUseCase(
+        recongnizedWords: "",
+        ref: ref,
+        personTurn: 1,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    handleWeatherCompeletingDraftSubac(ref, context);
+
+    print(" read current ayah state : ${ref.read(readyCurrentAyahProvider)}");
+    print(" palyError current ayah state : ${ref.read(playErrorTextProvider)}");
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onPrimary,
       appBar: AppBar(
         centerTitle: true,
-        leading: BackButton(
-          color: Colors.white,
-        ),
+        leading: ref.watch(readyCurrentAyahProvider) == 1 ||
+                ref.watch(playErrorTextProvider) == 1 ||
+                ref.watch(micListeningProvider)
+            ? Container()
+            : BackButton(
+                color: Colors.white,
+                onPressed: () {
+                  ref.read(nextAyahIndexProvider.notifier).resetAyah();
+                  ref.read(whoBeginsQuranReading.notifier).resetWhoBegins();
+                  context.pop();
+                },
+              ),
         backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 2.0,
         title: Text("New Assembly"),
@@ -105,8 +134,10 @@ class NewAssemblyScreen extends ConsumerWidget {
                   child: Text(
                     "Who Begins",
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                          fontSize: 20,
-                        ),
+                        fontSize: 20,
+                        color: ref.read(themeManagerProvider) == ThemeMode.light
+                            ? Colors.black
+                            : Colors.white),
                   ),
                 ),
               if (ref.watch(whoBeginsQuranReading) == 0)
@@ -118,13 +149,13 @@ class NewAssemblyScreen extends ConsumerWidget {
                         if (ref.read(whoBeginsQuranReading) == 0) {
                           ref
                               .read(whoBeginsQuranReading.notifier)
-                              .update((state) => 1);
+                              .aiWillBeginState();
                           ref.read(nextAyahIndexProvider.notifier).resetAyah();
                           ref
                               .read(recitedAyahByUser.notifier)
                               .update((state) => "");
                           _implemented.aiReadingQuranAyahUseCase(
-                              context: context,
+                              
                               ref: ref,
                               recongnizedWords: "",
                               personTurn: 1);
@@ -158,7 +189,8 @@ class NewAssemblyScreen extends ConsumerWidget {
                         if (ref.read(whoBeginsQuranReading) == 0) {
                           ref
                               .read(whoBeginsQuranReading.notifier)
-                              .update((state) => 2);
+                              .userWillBeginState();
+
                           ref.read(nextAyahIndexProvider.notifier).resetAyah();
                           ref
                               .read(recitedAyahByUser.notifier)
@@ -202,7 +234,7 @@ class NewAssemblyScreen extends ConsumerWidget {
                   height: 100,
                   width: 100,
                   child: LoadingIndicator(
-                    indicatorType: Indicator.audioEqualizer,
+                    indicatorType: Indicator.lineScalePulseOutRapid,
                     colors: [
                       Theme.of(context).colorScheme.primary,
                       Theme.of(context).colorScheme.primary.withOpacity(0.6)
@@ -212,9 +244,9 @@ class NewAssemblyScreen extends ConsumerWidget {
               SizedBox(height: 20),
               if (ref.watch(readyCurrentAyahProvider) == 1 ||
                   ref.watch(readyCurrentAyahProvider) == 2)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
                     GestureDetector(
                       onTap: () => ref
                           .read(readyCurrentAyahProvider.notifier)
@@ -229,7 +261,7 @@ class NewAssemblyScreen extends ConsumerWidget {
                       onTap: () {
                         ref
                             .read(readyCurrentAyahProvider.notifier)
-                            .pauseCurrentAyah();
+                            .pauseOrResumseCurrentAyah();
                       },
                       child: ContainerIconHolder(
                         containerBackground: Color.fromARGB(255, 49, 202, 169),
@@ -248,9 +280,12 @@ class NewAssemblyScreen extends ConsumerWidget {
                         buttonBackgroundColor: Colors.white,
                         typeIcon: Icons.fast_forward,
                       ),
-                  ),
-                ],
-              )
+                    ),
+                  ],
+                ),
+              if (ref.watch(readyCurrentAyahProvider) == 2)
+                SizedBox(height: 30),
+              if (ref.watch(readyCurrentAyahProvider) == 2) SaveDraftSubac(),
             ],
           ),
         ),
