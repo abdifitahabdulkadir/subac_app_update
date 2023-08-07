@@ -50,10 +50,10 @@ dependencies:
   go_router: ^9.0.3
   avatar_glow: ^2.0.2
   speech_to_text: ^6.3.0
-  flutter_tts: ^3.7.0
   loading_indicator: ^3.1.1
   audiofileplayer: ^2.1.1
   intl: ^0.18.1
+  
  
 
 dev_dependencies:
@@ -95,6 +95,8 @@ flutter:
     - lib\core\images\prof.png
     - assets/audio/
     - assets/icons/
+    - assets/error_audio/
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

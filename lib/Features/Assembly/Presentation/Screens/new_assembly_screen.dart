@@ -42,8 +42,6 @@ class NewAssemblyScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     handleWeatherCompeletingDraftSubac(ref, context);
 
-    print(" read current ayah state : ${ref.read(readyCurrentAyahProvider)}");
-    print(" palyError current ayah state : ${ref.read(playErrorTextProvider)}");
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onPrimary,
       appBar: AppBar(
@@ -241,7 +239,44 @@ class NewAssemblyScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
+                
               SizedBox(height: 20),
+              if (ref
+                          .watch(playErrorTextProvider.notifier)
+                          .countNumberOfTimeUserRecitedWrongAyah ==
+                      2 &&
+                  ref.watch(playErrorTextProvider) == 1)
+                Icon(
+                  Icons.arrow_downward,
+                  color: Colors.green,
+                  size: 40,
+                ),
+              if (ref
+                          .watch(playErrorTextProvider.notifier)
+                          .countNumberOfTimeUserRecitedWrongAyah ==
+                      2 &&
+                  ref.watch(playErrorTextProvider) == 1)
+                FittedBox(
+                  child: Container(
+                    height: 100,
+                    width: 200,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    )),
+                    child: Text(
+                      "Yes Surah Name is :${ref.read(dropDownProvider)} with ayah no :${ref.read(nextAyahIndexProvider)}",
+                      style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                          fontSize: 16,
+                          color:
+                              ref.watch(themeManagerProvider) == ThemeMode.dark
+                                  ? Colors.white
+                                  : Colors.black),
+                    ),
+                  ),
+                ),
+            
               if (ref.watch(readyCurrentAyahProvider) == 1 ||
                   ref.watch(readyCurrentAyahProvider) == 2)
                 Row(

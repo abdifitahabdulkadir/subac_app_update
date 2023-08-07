@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../SfRadialGauge/Presentation/screens/radial_gauge.dart';
 import '/config/themes/theme_manager_provider.dart';
 
 // my imports
@@ -29,7 +30,7 @@ class Home extends ConsumerWidget {
             return ref.watch(completeAssemblyProvider);
           }),
           SizedBox(height: 20),
-          ref.watch(radialProvider),
+          RadialGauge()
         ],
       ),
     );

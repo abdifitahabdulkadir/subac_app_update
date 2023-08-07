@@ -16,7 +16,6 @@ class _CompletePausedSubacState extends ConsumerState<CompletePausedSubac> {
   final FetchDraftedSubacUsecaseImple _draftedSubacUsecaseImple =
       FetchDraftedSubacUsecaseImple();
   late bool isLengthOfDataEmpty = false;
-
   _init() async {
     await _draftedSubacUsecaseImple.fetchDraftedUseCase(ref: ref).then(
       (value) {

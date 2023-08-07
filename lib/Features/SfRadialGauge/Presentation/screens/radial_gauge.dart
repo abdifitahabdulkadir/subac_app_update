@@ -1,34 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:subac_app_update/Features/SfRadialGauge/Presentation/state/radial_provider.dart';
 import '../../Applicaton/Usecase/fetch_needle_data_usecase_imple.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class RadialGauge extends ConsumerStatefulWidget {
-  @override
-  ConsumerState<RadialGauge> createState() => _RadialGaugeState();
-}
+class RadialGauge extends ConsumerWidget {
 
-class _RadialGaugeState extends ConsumerState<RadialGauge> {
-  FetchNeedleDataUsecaseImple _dataUsecaseImple = FetchNeedleDataUsecaseImple();
-
-  double _getPercentageValue = 0;
-
-  void _calcuatePercentage(WidgetRef ref) async {
-    await _dataUsecaseImple.fetchRadialNeedleData(ref: ref).then((value) {
-      setState(() {
-        _getPercentageValue = value.incompleteDraftValue;
-      });
-    });
-  }
 
   @override
-  void initState() {
-    super.initState();
-    _calcuatePercentage(ref);
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       height: 230,
       child: SfRadialGauge(
@@ -58,7 +38,7 @@ class _RadialGaugeState extends ConsumerState<RadialGauge> {
             pointers: <GaugePointer>[
               NeedlePointer(
                 needleColor: Colors.green.shade600,
-                value: _getPercentageValue,
+                value: ref.watch(radialValueProvider),
                 enableAnimation: true,
               ),
             ],
@@ -66,7 +46,7 @@ class _RadialGaugeState extends ConsumerState<RadialGauge> {
               GaugeAnnotation(
                 widget: FittedBox(
                   child: Text(
-                    "${_getPercentageValue}% Completed",
+                    "${ref.watch(radialValueProvider)}% Completed",
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           fontSize: 14,
                         ),

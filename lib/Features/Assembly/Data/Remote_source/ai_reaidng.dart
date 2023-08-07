@@ -1,10 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 
 // custom imports
 import '../DataState/read_ayah_provider.dart';
 import '../DataState/read_error_text_provider.dart';
-import '/Features/Assembly/Data/constants/constants_text.dart';
 import '/Features/Assembly/Presentation/State/who_begins_provider.dart';
 import '/Features/Assembly/Presentation/State/ayan_state_provider.dart';
 import '/Features/Assembly/Presentation/State/dropdown_provider.dart';
@@ -12,7 +10,6 @@ import '/config/state/firebase_constants.dart';
 import '/Features/Assembly/Presentation/State/surah_ayan_length_provider.dart';
 import '/Features/Complete/Data/DataState/complete_state_provider.dart';
 
-FlutterTts _flutterTts = FlutterTts();
 Future<void> aiReadingAyah(
     {required WidgetRef ref,
     required String reconizedWords,
@@ -66,31 +63,23 @@ Future<void> aiReadingAyah(
                 } else {
                   ref.read(completeStateProvider.notifier).resetCompleteState();
                   ref.read(completeStateProvider.notifier).resetCompleteState();
-                  ref.read(playErrorTextProvider.notifier).readEndsWords(
-                        textToBeRead: textAfterSubacEnd,
-                      );
+                  ref.read(playErrorTextProvider.notifier).readEndsWords();
                 }
               } else {
                 if (ref
                         .read(playErrorTextProvider.notifier)
                         .countNumberOfTimeUserRecitedWrongAyah ==
                     2) {
-                  _flutterTts.setLanguage("en");
-                  _flutterTts.setSpeechRate(0.4);
                   ref
                       .read(playErrorTextProvider.notifier)
                       .resetNumberOfTimesUserRecitedWrongAyah();
                   ref
                       .read(nextAyahIndexProvider.notifier)
                       .incrementToNextAyah();
-                  _flutterTts.speak(textBeforeAiTakesUserTurn);
-                  _flutterTts.setCompletionHandler(() {
-                    ref
-                        .read(readyCurrentAyahProvider.notifier)
-                        .readAyahAfterUserRecitedWronglyThreeTimes(
-                            ayahPath:
-                                "${ref.read(dropDownProvider)}${ref.read(nextAyahIndexProvider) - 1}");
-                  });
+                  await ref.read(readyCurrentAyahProvider.notifier).playAyah(
+                      shouldItakeUserturn: true,
+                      ayahPath:
+                          "${ref.read(dropDownProvider)}${ref.read(nextAyahIndexProvider) - 1}");
                 } else {
                   ref
                       .read(playErrorTextProvider.notifier)
@@ -104,15 +93,11 @@ Future<void> aiReadingAyah(
             } else
               await ref
                   .read(playErrorTextProvider.notifier)
-                  .palyErrorSoundAfterUserTurnReadsNothing(
-                    textToBeRead: textAfterUserSelectStartMeAndReadNothing,
-                  );
+                  .palyErrorSoundAfterUserTurnReadsNothing();
           }
         } else {
           ref.read(completeStateProvider.notifier).resetCompleteState();
-          ref.read(playErrorTextProvider.notifier).readEndsWords(
-                textToBeRead: textAfterSubacEnd,
-              );
+          ref.read(playErrorTextProvider.notifier).readEndsWords();
         }
       }
     }).onError((error, stackTrace) {
