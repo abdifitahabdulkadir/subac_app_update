@@ -5,6 +5,5 @@ abstract class AIReadingRepository {
   Future<void> aiReadingRepository(
       {required String recongnizedWords,
       required WidgetRef ref,
-     
       required int personTurn});
 }

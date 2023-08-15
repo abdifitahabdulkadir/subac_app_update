@@ -40,7 +40,7 @@ class ReadErrorTextNotifier extends StateNotifier<int> {
     countNumberOfTimeUserRecitedWrongAyah++;
     state = 1;
 
-    //handling  first time use reads wrong ayah at his trn
+    //handling  first time use reads wrong ayah at his turn
     if (countNumberOfTimeUserRecitedWrongAyah == 1) {
       try {
         _audioPlay = await Audio.load("assets/error_audio/first_wrong_time.mp3",

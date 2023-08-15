@@ -26,7 +26,10 @@ class ReadAyahNotifier extends StateNotifier<int> {
   Future<void> playAyah(
       {required String ayahPath, bool shouldItakeUserturn = false}) async {
     state = 1;
-    if (shouldItakeUserturn) {
+
+    // this only true when user recites wrong ayah two
+    // and then ai takes his turn with again specified ayah in the parameter
+    if (shouldItakeUserturn == true) {
       try {
         audio = await Audio.load(
           'assets/error_audio/ayad_kaqaadasho.mp3',
@@ -41,7 +44,10 @@ class ReadAyahNotifier extends StateNotifier<int> {
         )
           ..play();
       } catch (exception) {}
-    } else {
+    }
+
+    // ai takes ayah at his turn with specified path
+    else {
       try {
         // Load from assets, store as a variable.
         audio =

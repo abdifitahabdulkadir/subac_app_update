@@ -11,8 +11,6 @@ class AIReadingQuranAyahUsecaseImplemented
       {required String recongnizedWords,
       required WidgetRef ref,
       required int personTurn}) async {
-    print("our quran is here usercase impleented");
-    print(recongnizedWords);
     return await _implemented.aiReadingRepository(
       recongnizedWords: recongnizedWords,
       ref: ref,

@@ -8,11 +8,10 @@ class AIReadingAyahRepositoryImplemented implements AIReadingRepository {
   Future<void> aiReadingRepository(
       {required String recongnizedWords,
       required WidgetRef ref,
-     
-      required int personTurn}) async {
+    required int personTurn,
+  }) async {
     return await aiReadingAyah(
       ref: ref,
-     
       reconizedWords: recongnizedWords,
       personTurn: personTurn,
     );
