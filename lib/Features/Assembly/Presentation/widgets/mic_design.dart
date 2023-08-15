@@ -39,7 +39,7 @@ class _MicDesignState extends ConsumerState<MicDesign> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (ref.read(micListeningProvider)) {
+        if (ref.read(micListeningProvider) == true) {
           ref.read(micListeningProvider.notifier).update((state) => false);
           await speechToText.stop();
           await _implemented.aiReadingQuranAyahUseCase(
@@ -58,7 +58,6 @@ class _MicDesignState extends ConsumerState<MicDesign> {
                   ref.read(recitedAyahByUser.notifier).update(
                         (state) => result.recognizedWords,
                       );
-                  print(result.recognizedWords);
                 });
               },
             );
