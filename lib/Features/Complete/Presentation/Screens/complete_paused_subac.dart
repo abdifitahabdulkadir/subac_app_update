@@ -36,10 +36,9 @@ class _CompletePausedSubacState extends ConsumerState<CompletePausedSubac> {
     super.initState();
     _init();
   }
-
+  
   @override
   Widget build(BuildContext context) {
-    print("vlaue of we have : ${isLengthOfDataEmpty}");
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
         appBar: AppBar(

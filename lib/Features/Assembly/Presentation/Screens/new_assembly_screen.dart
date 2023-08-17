@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
 // my custom imports
+import '../widgets/category_design.dart';
 import '/Features/Assembly/Presentation/State/mic_listening_provider.dart';
 import '/Features/Complete/Data/DataState/complete_state_provider.dart';
 import '../../Data/DataState/read_ayah_provider.dart';
@@ -74,18 +75,16 @@ class NewAssemblyScreen extends ConsumerWidget {
               SizedBox(
                 width: double.infinity,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    RadioButtonDesign(
+                    CategoryDesign(
                       title: "By Surah",
-                      radioButtonValue: 0,
                     ),
-                    RadioButtonDesign(
-                      title: "By Hizb",
-                      radioButtonValue: 1,
-                    ),
-                    RadioButtonDesign(
+                    CategoryDesign(
                       title: "By Juz",
-                      radioButtonValue: 2,
+                    ),
+                    CategoryDesign(
+                      title: "By Hezb",
                     ),
                   ],
                 ),

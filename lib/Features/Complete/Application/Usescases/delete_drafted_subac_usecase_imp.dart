@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/src/consumer.dart';
-import 'package:subac_app_update/Features/Complete/Domain/Usecase/delete_draftedSubacuse.dart';
 
+// custom improts
+import '/Features/Complete/Domain/Usecase/delete_draftedSubacuse.dart';
 import '../../Data/Respository/delete_drafted_subac_repo_imple.dart';
 
 class DeleteDraftedSubacUsecaseImple implements DeleteDraftedSubacUsecase {

@@ -15,7 +15,6 @@ Future<bool> isThisUserHasDocumentAlready(
         .get();
     if (_fetchDocument.id.isNotEmpty) _isExisted = true;
   } catch (exception) {
-    print("eror ayaa dhacay ${exception}");
-  }
+      }
   return _isExisted;
 }

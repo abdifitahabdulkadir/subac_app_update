@@ -15,17 +15,23 @@ Future<void> storeDraftedSubacInFirebase({
   required int surahAyahLength,
 }) async {
   try {
+    // check if the user has already had a docuemnt with his userid
     final bool _userAlreadyHasDocument = await isThisUserHasDocumentAlready(
       documentId: ref.read(firebaseAuthInstanceProvider).currentUser!.uid,
       ref: ref,
     );
 
+    // if it is true(user has already had docuemnt) then call fucntion
+    // to check weather his sub collection has same docuemnt like this one
+    // surahname with ayah numeber
     if (_userAlreadyHasDocument) {
       final bool _isCurrentDocumentExisted = await isDocumentExistedBefore(
         ayahNumber: ayahNumber,
         surahName: surahName,
         ref: ref,
       );
+
+      // if so then upate the exisiting one
       if (_isCurrentDocumentExisted) {
         await updateCurrentDocument(
           documentId: "${surahName}${ayahNumber}",
@@ -36,7 +42,9 @@ Future<void> storeDraftedSubacInFirebase({
           ref: ref,
           surahAyahLength: surahAyahLength,
         );
-      } else {
+      }
+      // create new one for him
+      else {
         await createNewDocument(
           documentId: "${surahName}${ayahNumber}",
           surahName: surahName,
@@ -47,7 +55,11 @@ Future<void> storeDraftedSubacInFirebase({
           surahAyahLength: surahAyahLength,
         );
       }
-    } else {
+    }
+    // if user does not have  any document with userid then
+    // simply create document with id and create subCollection then new documnet
+    // with current surah name and ayah--al-fatixa0
+    else {
       await createNewDocument(
         documentId: "${surahName}${ayahNumber}",
         surahName: surahName,

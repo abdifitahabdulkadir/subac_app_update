@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// custom imports
 import '../../../../config/state/firebase_constants.dart';
 import '../constants/constants.dart';
 
@@ -16,7 +17,7 @@ Future<bool> deleteDocument(
         .delete()
         .then((value) => _isExisted = true);
   } catch (exception) {
-    print("eror ayaa dhacay ${exception}");
+    
   }
 
   return _isExisted;

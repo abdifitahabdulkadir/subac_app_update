@@ -27,14 +27,7 @@ class TextFieldDesign extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
       child: TextFormField(
-        validator: (currentName) {
-          if (currentName!.isEmpty) {
-            return "name can be empty";
-          } else if (currentName.length < 6) {
-            return "at least 5 characters";
-          }
-          return null;
-        },
+        validator: validator,
         onChanged: saveValue,
         obscureText: isTextHiddding,
         keyboardType: keyboardType,

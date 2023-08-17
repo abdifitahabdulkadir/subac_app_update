@@ -25,7 +25,6 @@ Future<bool> isDocumentExistedBefore({
       if (result) _isExisted = true;
     });
   } catch (exception) {
-    print("eror ayaa dhacay ${exception}");
-  }
+     }
   return _isExisted;
 }
